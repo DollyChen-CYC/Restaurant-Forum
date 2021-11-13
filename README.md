@@ -1,4 +1,4 @@
-# restaurant-forum-front-end-vue
+# 🍱 Restaurant Forum
 #### This is a front-end project of restaurant forum built by Vue.js.
 
 .
@@ -18,7 +18,7 @@
 ```
 npm run serve
 ```
-- Open the browser and navigate to http://localhost:8080
+- Open the browser and navigate to http://localhost:8080   👀 
 
 ### Compiles and minifies for production
 ```
