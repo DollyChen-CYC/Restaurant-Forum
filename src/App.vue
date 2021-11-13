@@ -1,7 +1,7 @@
 <template>
   <div id="restaurant-forum">
     <Navbar />
-    <main class="my-5 bg-light">
+    <main class="my-5 bg-light" style="min-height: 100vh">
       <router-view/>
     </main>
     
