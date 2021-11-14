@@ -19,7 +19,7 @@
         <!-- is user is admin -->
         <router-link
           v-if="currentUser.isAdmin"
-          to="#"
+          :to="{name : 'admin-restaurants'}"
           class="nav-link text-white"
         >
           管理員後台
