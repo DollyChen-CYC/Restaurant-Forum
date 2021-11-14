@@ -42,6 +42,7 @@
           >Edit</a>
 
           <button
+          @click.prevent.stop="deleteRestaurant(restaurant.id)"
             type="button"
             class="btn btn-link"
           >
@@ -63,6 +64,11 @@ export default {
   data () {
     return {
       restaurants: this.initialRestaurants
+    }
+  },
+  methods: {
+    deleteRestaurant (restaurantId) {
+      this.restaurants = this.restaurants.filter(restaurant => restaurant.id !== restaurantId)
     }
   }
 }
