@@ -1,10 +1,10 @@
 <template>
   <div class="card mb-4">
     <div class="row no-gutters">
-      <div class="col-md-4">
+      <div class="col-sm-7 col-md-5 col-lg-4">
         <img :src="userProfile.image" width="300px" height="300px" />
       </div>
-      <div class="col-md-8">
+      <div class="col-sm-5 col-md-7 col-lg-8">
         <div class="card-body">
           <h5 class="card-title">{{ userProfile.name }}</h5>
           <p class="card-text">u{{ userProfile.email }}</p>
@@ -25,11 +25,26 @@
               (追隨者)
             </li>
           </ul>
-          <p></p>
-          <form @submit.stop.prevent="handleFollowingClick(userProfile.id)" action="/following/2" method="POST" style="display: contents">
-            <button v-if="isFollowed"  type="submit" class="btn btn-danger">取消追蹤</button>
+
+          <router-link
+            v-if="currentUser.isAdmin || currentUser.id == userProfile.id"
+            :to="{ name: 'user-edit', params: { id: userProfile.id } }"
+            class="btn btn-secondary me-2"
+            >編輯</router-link
+          >
+          <form
+            v-if="currentUser.id != userProfile.id"
+            @submit.stop.prevent="handleFollowingClick(userProfile.id)"
+            action="/following/2"
+            method="POST"
+            style="display: contents"
+          >
+            <button v-if="isFollowed" type="submit" class="btn btn-danger">
+              取消追蹤
+            </button>
             <button v-else type="submit" class="btn btn-primary">追蹤</button>
           </form>
+
           <p></p>
         </div>
       </div>
@@ -46,7 +61,7 @@ export default {
     },
     isFollowed: {
       type: Boolean,
-      defalt: false
+      defalt: false,
     },
     currentUser: {
       type: Object,
@@ -54,9 +69,9 @@ export default {
     },
   },
   methods: {
-    handleFollowingClick (userProfileId) {
-      this.$emit('toggle-following-status', userProfileId )
-    }
-  }
+    handleFollowingClick(userProfileId) {
+      this.$emit("toggle-following-status", userProfileId);
+    },
+  },
 };
 </script>
