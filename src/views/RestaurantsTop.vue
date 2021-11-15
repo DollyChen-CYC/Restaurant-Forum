@@ -37,12 +37,16 @@
             >Show</router-link>
 
             <button
+            @click.stop.prevent="removeFavorite(restaurant.id)"
+            v-if="restaurant.isFavorited"
               type="button"
               class="btn btn-danger me-2"
             >
               移除最愛
             </button>
             <button
+            @click.stop.prevent="addFavorite(restaurant.id)"
+            v-else
               type="button"
               class="btn btn-primary"
             >
@@ -243,6 +247,30 @@ export default {
   data () {
     return {
       restaurantsTop: dummyData.restaurants
+    }
+  },
+  methods: {
+    addFavorite(restaurantId) {
+      this.restaurantsTop = this.restaurantsTop.map(restaurant => {
+        if (restaurant.id === restaurantId) {
+          return {
+            ...restaurant,
+            isFavorited: true
+          }
+        }
+        return restaurant
+      })
+    },
+    removeFavorite(restaurantId) {
+      this.restaurantsTop = this.restaurantsTop.map(restaurant => {
+        if (restaurant.id === restaurantId) {
+          return {
+            ...restaurant,
+            isFavorited: false
+          }
+        }
+        return restaurant
+      })
     }
   }
 }
