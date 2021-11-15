@@ -1326,7 +1326,12 @@ export default {
   },
   methods: {
     fetchUserProfile() {
-      this.userProfile = dummyData.profile;
+      const { id } = this.$route.params
+      this.userProfile = {
+        ...dummyData.profile,
+        id
+      }
+      ;
       this.isFollowered = dummyData.isFollowed;
       this.currentUser = dummyUser.currentUser;
     },
