@@ -44,7 +44,6 @@
         class="form-control my-2"
       />
     </div>
-
     <button type="submit" class="btn btn-primary my-3">Submit</button>
     <button @click="$router.back()" class="btn btn-secondary my-3 mx-3">
       返回
@@ -72,7 +71,8 @@ export default {
         id: -1,
         name: "",
         email: "",
-        image: ""
+        image: "",
+        updatedAt: "",
       },
     };
   },
@@ -98,11 +98,11 @@ export default {
         this.profile.image = imageURL;
       }
     },
-    handleFormSubmit (event) {
-      const form = event.target
-      const formData = new FormData(form)
-      this.$emit('after-submit', formData)
-    }
+    handleFormSubmit(event) {
+      const form = event.target;
+      const formData = new FormData(form);
+      this.$emit("after-submit", formData);
+    },
   },
 };
 </script>
