@@ -81,7 +81,13 @@
 
     <div class="form-group my-3">
       <label for="image">Image</label>
-      <img v-if="restaurant.image" :src="restaurant.image" class="d-block img-thumbnail mt-2" width="200" height="200" />
+      <img
+        v-if="restaurant.image"
+        :src="restaurant.image"
+        class="d-block img-thumbnail mt-2"
+        width="200"
+        height="200"
+      />
       <input
         @change="handleFileChange"
         id="image"
@@ -90,7 +96,6 @@
         accept="image/*"
         class="form-control mt-2"
       />
-      
     </div>
 
     <button type="submit" class="btn btn-primary my-3">送出</button>
@@ -131,6 +136,20 @@ const dummyData = {
 };
 
 export default {
+  props: {
+    initialRestaurant: {
+      type: Object,
+      default: () => ({
+        name: "",
+        categoryId: "",
+        tel: "",
+        address: "",
+        description: "",
+        image: "",
+        openingHours: "",
+      }),
+    },
+  },
   data() {
     return {
       restaurant: {
@@ -146,10 +165,14 @@ export default {
     };
   },
   created() {
-    this.fetchCategory();
+    this.fetchCategories();
+    this.restaurant = {
+      ...this.restaurant,
+      ...this.initialRestaurant
+    }
   },
   methods: {
-    fetchCategory() {
+    fetchCategories() {
       this.categories = dummyData.categories;
     },
     handleFileChange(event) {
@@ -163,10 +186,10 @@ export default {
       }
     },
     handleFormSubmit(event) {
-      const form = event.target
-      const formData = new FormData(form)
-      this.$emit('after-form-submit', formData)
-    }
+      const form = event.target;
+      const formData = new FormData(form);
+      this.$emit("after-form-submit", formData);
+    },
   },
 };
 </script>
