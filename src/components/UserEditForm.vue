@@ -72,8 +72,7 @@ export default {
         id: -1,
         name: "",
         email: "",
-        image: "",
-        updatedAt: "",
+        image: ""
       },
     };
   },
