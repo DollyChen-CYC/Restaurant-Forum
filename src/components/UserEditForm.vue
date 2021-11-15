@@ -101,7 +101,7 @@ export default {
     handleFormSubmit(event) {
       const form = event.target;
       const formData = new FormData(form);
-      this.$emit("after-submit", formData);
+      this.$emit('after-submit', formData);
     },
   },
 };
