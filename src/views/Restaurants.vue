@@ -40,7 +40,7 @@ export default {
     RestaurantsNavPhills,
     RestaurantsPagination,
   },
-  data () {
+  data() {
     return {
       restaurants: [],
       categories: [],
@@ -51,16 +51,14 @@ export default {
       nextPage: -1,
     }
   },
-  created () {
+  created() {
     const { page = '', categoryId = '' } = this.$route.query
     this.fetchRestaurants({
       queryPage: page,
       queryCategoryId: categoryId
     })
   },
-  beforeRouteUpdate (to, from, next) {
-    // console.log('to',to)
-    // console.log('from', from)
+  beforeRouteUpdate(to, from, next) {
     const { page = '', categoryId = '' } = to.query
     this.fetchRestaurants({ queryPage: page, queryCategoryId: categoryId })
     next()
@@ -73,21 +71,11 @@ export default {
           categoryId: queryCategoryId
         })
 
-        // console.log('response', response)
-
         if (response.statusText !== 'OK') {
           throw new Error(response.statusText)
         }
 
-        const {
-          restaurants,
-          categories,
-          categoryId,
-          page,
-          totalPage,
-          prev,
-          next,
-        } = response.data
+        const { restaurants, categories, categoryId, page, totalPage, prev, next } = response.data
         this.restaurants = restaurants
         this.categories = categories
         this.categoryId = categoryId
