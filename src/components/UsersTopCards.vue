@@ -11,7 +11,7 @@
     <p class="mt-3">
       <button
         v-if="user.isFollowed"
-        @click.prevent.stop="removeFollowed"
+        @click.prevent.stop="removeFollowed(user.id)"
         type="button"
         class="btn btn-danger mx-2 px-3"
       >
@@ -19,7 +19,7 @@
       </button>
       <button
         v-else
-        @click.prevent.stop="addFollowed"
+        @click.prevent.stop="addFollowed(user.id)"
         type="button"
         class="btn btn-primary mx-2 px-3"
       >
@@ -30,6 +30,9 @@
 </template>
 
 <script>
+import usersAPI from '../apis/users.js'
+import { Toast } from '../utils/helpers.js'
+
 export default {
   props: {
     initialUser: {
@@ -40,20 +43,45 @@ export default {
   data() {
     return {
       user: this.initialUser,
-    };
+    }
   },
   methods: {
-    addFollowed() {
-      this.user = {
-        ...this.user,
-        isFollowed: true,
-      };
+    async addFollowed(userId) {
+      try {
+        const { data } = await usersAPI.addFollowing({ userId })
+        if (data.status !== 'success') {
+          throw new Error(data.message)
+        }
+        this.user = {
+          ...this.user,
+          isFollowed: true,
+        }
+      } catch (error) {
+        console.log(error)
+        Toast.fire({
+          icon: 'error',
+          title: '無法加入追蹤，請稍後再試'
+        })
+      }
+
     },
-    removeFollowed() {
-      this.user = {
-        ...this.user,
-        isFollowed: false,
-      };
+    async removeFollowed(userId) {
+      try {
+        const { data } = await usersAPI.deleteFollowing({ userId })
+        if (data.status !== 'success') {
+          throw new Error(data.message)
+        }
+        this.user = {
+          ...this.user,
+          isFollowed: false,
+        }
+      } catch (error) {
+        console.log(error)
+        Toast.fire({
+          icon: 'error',
+          title: '無法取消追蹤，請稍後再試'
+        })
+      }
     },
   },
 };
