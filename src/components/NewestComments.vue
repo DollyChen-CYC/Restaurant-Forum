@@ -13,11 +13,9 @@
             {{ comment.Restaurant.name }}
           </router-link>
         </h4>
-        <p class="px-2 text-limit">{{ comment.Restaurant.description }}</p>by
-        <router-link :to="{name:'user', params: {id: comment.User.id}}">
-          {{ comment.User.name}}
-        </router-link>
-        at {{ comment.createdAt | fromNow }} 
+        <p class="px-2 text-limit">{{ comment.Restaurant.description }}</p>
+          {{ comment.createdAt | fromNow }}, by 
+          <router-link :to="{name:'user', params: {id: comment.User.id}}"> {{ comment.User.name}} </router-link>
         <hr>
       </div>
       <!-- v-for end -->
