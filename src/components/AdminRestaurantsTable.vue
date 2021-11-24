@@ -21,6 +21,7 @@
       </tr>
     </thead>
     <tbody>
+      <!-- v-for start -->
       <tr
         v-for="restaurant in restaurants"
         :key="restaurant.id"
@@ -50,10 +51,14 @@
           </button>
         </td>
       </tr>
+      <!-- v-for end -->
     </tbody>
   </table>
 </template>
 <script>
+import adminAPI from '../apis/admin.js'
+import { Toast } from '../utils/helpers.js'
+
 export default {
   props: {
     initialRestaurants : {
@@ -67,8 +72,20 @@ export default {
     }
   },
   methods: {
-    deleteRestaurant (restaurantId) {
-      this.restaurants = this.restaurants.filter(restaurant => restaurant.id !== restaurantId)
+    async deleteRestaurant (restaurantId) {
+      try {
+        const { data } = await adminAPI.restaurants.deleteRestaurant({ restaurantId })
+        if (data.status !== 'success') {
+          throw new Error(data.message)
+        }
+        this.restaurants = this.restaurants.filter(restaurant => restaurant.id !== restaurantId)
+      } catch (error) {
+        Toast.fire({
+          icon: 'error',
+          title: '目前無法刪除餐廳，請稍後再試'
+        })
+      }
+      
     }
   }
 }
