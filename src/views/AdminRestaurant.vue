@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-md-12">
         <h1>{{ restaurant.name }}</h1>
-        <span class="badge badge-secondary mt-1 mb-3">
+        <span class="badge bg-secondary mt-1 mb-3">
           {{ restaurant.categoryName }}
         </span>
       </div>
@@ -11,8 +11,8 @@
         <img
           class="img-responsive center-block"
           :src="restaurant.image | emptyImage"
-          style="width: 250px;margin-bottom: 25px;"
-        >
+          style="width: 250px; margin-bottom: 25px"
+        />
         <div class="well">
           <ul class="list-unstyled">
             <li>
@@ -34,42 +34,21 @@
         <p>{{ restaurant.description }}</p>
       </div>
     </div>
-    <hr>
-    <button
-      type="button"
-      class="btn btn-link"
-      @click="$router.back()"
-    >回上一頁</button>
+    <hr />
+    <button type="button" class="btn btn-link" @click="$router.back()">
+      回上一頁
+    </button>
   </div>
 </template>
 <script>
 import { emptyImageFilter } from './../utils/mixins'
+import adminAPI from '../apis/admin.js'
+import { Toast } from '../utils/helpers.js'
 
-const dummyData = {
-  restaurant: {
-    id: 2,
-    name: 'Mrs. Mckenzie Johnston',
-    tel: '567-714-6131 x621',
-    address: '61371 Rosalinda Knoll',
-    opening_hours: '08:00',
-    description:
-      'Quia pariatur perferendis architecto tenetur omnis pariatur tempore.',
-    image: 'https://loremflickr.com/320/240/food,dessert,restaurant/?random=2',
-    createdAt: '2019-06-22T09:00:43.000Z',
-    updatedAt: '2019-06-22T09:00:43.000Z',
-    CategoryId: 3,
-    Category: {
-      id: 3,
-      name: '義大利料理',
-      createdAt: '2019-06-22T09:00:43.000Z',
-      updatedAt: '2019-06-22T09:00:43.000Z'
-    }
-  }
-}
 export default {
   name: 'AdminRestaurant',
   mixins: [emptyImageFilter],
-  data () {
+  data() {
     return {
       restaurant: {
         name: '',
@@ -82,22 +61,44 @@ export default {
       }
     }
   },
-  created () {
-    this.fetchRestaurant()
+  created() {
+    const restaurantId = this.$route.params.id
+    this.fetchRestaurant(restaurantId)
+  },
+  beforeRouteUpdate(to, from, next) {
+    const { id } = to.params
+    this.fetchRestaurant(id)
+    next()
   },
   methods: {
-    fetchRestaurant () {
-      const { restaurant } = dummyData
-      this.restaurant = {
-        ...this.restaurant,
-        name: restaurant.name,
-        categoryName: restaurant.Category.name,
-        image: restaurant.image,
-        openingHours: restaurant.opening_hours,
-        tel: restaurant.tel,
-        address: restaurant.address,
-        description: restaurant.description
+    async fetchRestaurant(restaurantId) {
+      try {
+        const { data } = await adminAPI.restaurants.getDetail({ restaurantId })
+
+        if (!data.restaurant) {
+          throw new Error('error-Fail to fetch data')
+        }
+
+        const { restaurant } = data
+        this.restaurant = {
+          ...this.restaurant,
+          name: restaurant.name,
+          categoryName: restaurant.Category.name,
+          image: restaurant.image,
+          openingHours: restaurant.opening_hours,
+          tel: restaurant.tel,
+          address: restaurant.address,
+          description: restaurant.description
+        }
+      } catch (error) {
+        Toast.fire({
+          icon: 'error',
+          title: '無法取得餐廳資料，請稍後再試'
+        })
       }
+
+
+
     }
   }
 }
