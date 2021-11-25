@@ -1,6 +1,6 @@
 <template>
   <div class="col">
-    <div class="card mb-2">
+    <div class="card mb-2 h-100">
       <img
         class="card-img-top w-100"
         :src="restaurant.image"
@@ -8,14 +8,15 @@
       />
       <div class="card-body">
         <p class="card-text title-wrap">
+          <span class="badge bg-primary float-end ms-1">{{
+            restaurant.Category.name
+          }}</span>
           <router-link
             :to="{ name: 'restaurant', params: { id: restaurant.id } }"
           >
             {{ restaurant.name }}
           </router-link>
-          <span class="badge bg-primary float-end">{{
-            restaurant.Category.name
-          }}</span>
+          
         </p>
 
         <p class="card-text text-truncate my-2">

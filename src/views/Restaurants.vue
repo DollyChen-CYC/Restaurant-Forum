@@ -76,8 +76,20 @@ export default {
         }
 
         const { restaurants, categories, categoryId, page, totalPage, prev, next } = response.data
-        this.restaurants = restaurants
-        this.categories = categories
+        this.restaurants = restaurants.map(restaurant => {
+          const { id, name, description, image, Category, CategoryId, isFavorited, isLiked } = restaurant
+          return {
+            id,
+            name,
+            description,
+            image,
+            Category: Category ? Category : {name: '未分類'},
+            CategoryId,
+            isFavorited,
+            isLiked
+          }
+        })
+        this.categories = categories 
         this.categoryId = categoryId
         this.page = page
         this.totalPage = totalPage
@@ -89,7 +101,7 @@ export default {
           icon: 'error',
           title: '無法取得餐廳資料，請稍後再試！'
         })
-        console.log('error', error)
+        console.log(error)
       }
     },
   },
