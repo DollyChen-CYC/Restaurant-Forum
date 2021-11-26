@@ -83,7 +83,7 @@ export default {
         this.restaurant = {
           ...this.restaurant,
           name: restaurant.name,
-          categoryName: restaurant.Category.name,
+          categoryName: restaurant.Category ? restaurant.Category.name : "未分類" ,
           image: restaurant.image,
           openingHours: restaurant.opening_hours,
           tel: restaurant.tel,

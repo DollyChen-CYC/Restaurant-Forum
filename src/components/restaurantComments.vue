@@ -12,6 +12,7 @@
           v-if="currentUser.isAdmin"
           type="button"
           class="btn btn-danger float-end"
+          :disabled="isDeleting"
         >
           Delete
         </button>
@@ -32,17 +33,7 @@
 
 <script>
 import { fromNowFilter } from './../utils/mixins.js'
-
-const dummyUser = {
-  currentUser: {
-    id: 1,
-    name: '管理者',
-    email: 'root@example.com',
-    image: 'https://i.pravatar.cc/300',
-    isAdmin: true
-  },
-  isAuthenticated: true
-}
+import { mapState } from 'vuex'
 
 export default {
   props: {
@@ -51,13 +42,19 @@ export default {
       default: function () {
         return []
       }
+    },
+    isDeleting: {
+      type: Boolean,
+      default: false
     }
   },
   mixins : [fromNowFilter],
   data () {
     return {
-      currentUser: dummyUser.currentUser,
     }
+  },
+  computed: {
+    ...mapState(['currentUser'])
   },
   methods: {
     handleDeleteButtonClick(commentId) {

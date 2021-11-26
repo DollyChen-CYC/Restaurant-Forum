@@ -13,13 +13,12 @@
       <button type="button" class="btn btn-link" @click="$router.back()">
         回上一頁
       </button>
-      <button type="submit" class="btn btn-primary mr-0">Submit</button>
+      <button type="submit" :disabled="isPosting" class="btn btn-primary mr-0">Submit</button>
     </div>
   </form>
 </template>
 
 <script>
-import { v4 as uuidv4 } from "uuid";
 
 export default {
   props: {
@@ -27,6 +26,10 @@ export default {
       type: Number,
       required: true,
     },
+    isPosting: {
+      type: Boolean,
+      default: false
+    }
   },
   data() {
     return {
@@ -35,10 +38,7 @@ export default {
   },
   methods: {
     handleSubmit() {
-      console.log("new comment:", this.inputComment);
-      // TODO: 向 API 發送 POST 請求
       this.$emit("after-create-comment", {
-        commentId: uuidv4(),
         restaurantId: this.restaurantId,
         text: this.inputComment,
       });

@@ -74,6 +74,9 @@
 </template>
 
 <script>
+import usersAPI from '../apis/users.js'
+import { Toast } from '../utils/helpers.js'
+
 export default {
   props: {
     initialRestaurant: {
@@ -95,17 +98,65 @@ export default {
     }
   },
   methods: {
-    addFavorite() {
-      this.restaurant.isFavorited = true
+    async addFavorite() {
+      try {
+        const restaurantId = this.restaurant.id
+        const { data } = await usersAPI.addFavorite({ restaurantId })
+        if (data.status !== 'success') {
+          throw new Error(data.message)
+        }
+        this.restaurant.isFavorited = true
+      } catch (error) {
+        Toast.fire({
+          icon: 'error',
+          title: '目前無法加入最愛，請稍後再試'
+        })
+      }
     },
-    removeFavorite() {
-      this.restaurant.isFavorited = false
+    async removeFavorite() {
+      try {
+        const restaurantId = this.restaurant.id
+        const { data } = await usersAPI.removeFavorite({ restaurantId })
+        if (data.status !== 'success') {
+          throw new Error(data.message)
+        }
+        this.restaurant.isFavorited = false
+      } catch (error) {
+        Toast.fire({
+          icon: 'error',
+          title: '無法移除最愛，請稍後再試'
+        })
+      }
     },
-    addLike() {
-      this.restaurant.isLiked = true
+    async addLike() {
+      try {
+        const restaurantId = this.restaurant.id
+        const { data } = await usersAPI.addLike({ restaurantId })
+        if (data.status !== 'success') {
+          throw new Error(data.message)
+        }
+        this.restaurant.isLiked = true
+      } catch (error) {
+        Toast.fire({
+          icon: 'error',
+          title: '目前無法按讚，請稍後再試'
+        })
+      }
     },
-    removeLike() {
-      this.restaurant.isLiked = false
+    async removeLike() {
+      try {
+        const restaurantId = this.restaurant.id
+        const { data } = await usersAPI.deleteLike({ restaurantId })
+        if (data.status !== 'success') {
+          throw new Error(data.message)
+        }
+        this.restaurant.isLiked = false
+      } catch (error) {
+        Toast.fire({
+          icon: 'error',
+          title: '目前無法移除讚，請稍後再試'
+        })
+      }
     },
   },
 };

@@ -6,11 +6,13 @@
     <!-- 餐廳評論 RestaurantComments -->
     <restaurantComments
       :restaurant-comments="restaurant.restaurantComments"
+      :is-deleting="isDeleteing"
       @after-delete-comment="afterDeleteComment"
     />
     <!-- 新增評論 CreateComment -->
     <create-comment
       :restaurant-id="restaurant.id"
+      :is-posting="isPosting"
       @after-create-comment="afterCreateComment"
     />
   </div>
@@ -18,6 +20,7 @@
 
 <script>
 import restaurantsAPI from '../apis/restaurants.js'
+import commentsAPI from '../apis/comments.js'
 import { Toast } from '../utils/helpers.js'
 import { mapState } from 'vuex'
 
@@ -48,6 +51,8 @@ export default {
         isFavorited: false,
         isLiked: false,
       },
+      isPosting: false,
+      isDeleteing: false,
     }
   },
   computed: {
@@ -69,7 +74,6 @@ export default {
         if (!data.restaurant.name) {
           throw new Error('error')
         }
-
         const { restaurant, isFavorited, isLiked } = data
         const {
           id,
@@ -103,24 +107,52 @@ export default {
         })
       }
     },
-    afterDeleteComment(commentId) {
-      this.restaurant.restaurantComments =
-        this.restaurant.restaurantComments.filter(
-          (comment) => comment.id !== commentId
-        )
+    async afterDeleteComment(commentId) {
+      try {
+        this.isDeleteing = true
+        const { data } = await commentsAPI.deleteRestaurantComment({ commentId })
+        if (data.status !== 'success') {
+          throw new Error(data.message)
+        }
+        this.restaurant.restaurantComments =
+          this.restaurant.restaurantComments.filter(comment => comment.id !== commentId)
+        this.isDeleteing = false
+      } catch (error) {
+        this.isDeleteing = false
+        Toast.fire({
+          icon: 'error',
+          title: '無法刪除評論，請稍後再試'
+        })
+      }
+
+
     },
-    afterCreateComment(payload) {
-      this.restaurant.restaurantComments.push({
-        id: payload.commentId,
-        text: payload.text,
-        UserId: this.currentUser.id,
-        RestaurantId: payload.restaurantId,
+    async afterCreateComment(payload) {
+      try {
+        const { restaurantId : RestaurantId, text } = payload
+        const UserId = this.currentUser.id
+        const { data } = await commentsAPI.createRestaurantComment({ UserId, RestaurantId, text})
+
+        if (data.status !== 'success') {
+          throw new Error(data.message)
+        }
+        this.restaurant.restaurantComments.push({
+        id: data.commentId,
+        text,
+        UserId,
+        RestaurantId,
         createdAt: new Date(),
         User: {
-          id: this.currentUser.id,
+          id: UserId,
           name: this.currentUser.name,
         },
       })
+      } catch (error) {
+        Toast.fire({
+          icon: 'error',
+          title: '無法新增評論，請稍後再試'
+        })
+      }
     },
   },
 };
