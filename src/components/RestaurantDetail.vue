@@ -33,7 +33,7 @@
       <p class="text-secondary">{{ restaurant.description }}</p>
       <router-link
         class="btn me-2 btn-secondary btn-border mr-2"
-        :to="{ name: 'restaurant-dashboard', params: {id: restaurant.id} }"
+        :to="{ name: 'restaurant-dashboard', params: { id: restaurant.id } }"
         >Dashboard</router-link
       >
 
@@ -84,20 +84,28 @@ export default {
   data() {
     return {
       restaurant: this.initialRestaurant,
-    };
+    }
+  },
+  watch: {
+    initialRestaurant(newValue) {
+      this.restaurant = {
+        ...this.restaurant,
+        ...newValue
+      }
+    }
   },
   methods: {
     addFavorite() {
-      this.restaurant.isFavorited = true;
+      this.restaurant.isFavorited = true
     },
     removeFavorite() {
-      this.restaurant.isFavorited = false;
+      this.restaurant.isFavorited = false
     },
     addLike() {
-      this.restaurant.isLiked = true;
+      this.restaurant.isLiked = true
     },
     removeLike() {
-      this.restaurant.isLiked = false;
+      this.restaurant.isLiked = false
     },
   },
 };
