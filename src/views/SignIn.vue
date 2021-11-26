@@ -86,8 +86,7 @@ export default {
           email: this.email,
           password: this.password
         })
-      
-        // console.log('response', response)
+
         const { data } = response
 
         if (data.status !== 'success') {
@@ -95,6 +94,7 @@ export default {
         }
 
         localStorage.setItem('token', data.token )
+        this.$store.commit('setCurrentUser', data.user)
         this.$router.push('/restaurants')
       
       } catch (error) {
