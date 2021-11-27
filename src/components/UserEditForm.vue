@@ -23,6 +23,7 @@
         class="form-control my-2"
         placeholder="Enter email"
         required
+        disabled
       />
     </div>
 
@@ -30,7 +31,6 @@
       <label for="image">Image</label>
       <img
         v-if="profile.image"
-        :src="profile.image"
         class="d-block img-thumbnail my-1"
         width="150"
         height="150"
@@ -44,7 +44,9 @@
         class="form-control my-2"
       />
     </div>
-    <button type="submit" class="btn btn-primary my-3">Submit</button>
+    <button type="submit" :disabled="isProcessing" class="btn btn-primary my-3">
+      Submit
+    </button>
     <button @click="$router.back()" class="btn btn-secondary my-3 mx-3">
       返回
     </button>
@@ -52,6 +54,8 @@
 </template>
 
 <script>
+import { Toast } from '../utils/helpers.js'
+
 export default {
   props: {
     initialProfile: {
@@ -61,9 +65,12 @@ export default {
         name: "",
         email: "",
         image: "",
-        updatedAt: "",
       }),
     },
+    isProcessing: {
+      type: Boolean,
+      default: false
+    }
   },
   data() {
     return {
@@ -72,36 +79,50 @@ export default {
         name: "",
         email: "",
         image: "",
-        updatedAt: "",
       },
-    };
+    }
   },
   created() {
-    const { id } = this.$route.params;
-    this.fetchUserProfile(id);
+    const { id } = this.$route.params
+    this.fetchUserProfile(id)
+  },
+  watch: {
+    initialProfile(newValue) {
+      this.profile = {
+        ...this.profile,
+        ...newValue
+      }
+    }
   },
   methods: {
-    fetchUserProfile(userId) {
-      console.log(`fetching user profile (id:${userId}) from API`);
+    fetchUserProfile() {
       this.profile = {
         ...this.profile,
         ...this.initialProfile,
-      };
+      }
     },
     handleFileChange(event) {
-      const { files } = event.target;
+      const { files } = event.target
 
       if (files.length === 0) {
-        this.profile.image = "";
+        this.profile.image = ""
       } else {
-        const imageURL = window.URL.createObjectURL(files[0]);
-        this.profile.image = imageURL;
+        const imageURL = window.URL.createObjectURL(files[0])
+        this.profile.image = imageURL
       }
     },
     handleFormSubmit(event) {
-      const form = event.target;
-      const formData = new FormData(form);
-      this.$emit('after-submit', formData);
+      // form validation
+      if (this.profile.name.trim().length === 0) {
+        Toast.fire({
+          icon: 'warning',
+          title: '請填入姓名'
+        })
+        return
+      }
+      const form = event.target
+      const formData = new FormData(form)
+      this.$emit('after-submit', formData)
     },
   },
 };

@@ -2,14 +2,19 @@ import { apiHelper } from '../utils/helpers'
 const getToken = () => localStorage.getItem('token')
 
 export default {
-  getCurrentUser () {
+  getCurrentUser() {
     return apiHelper.get(`/get_current_user`, {
-      headers: { Authorization: `Bearer ${getToken()}`}
+      headers: { Authorization: `Bearer ${getToken()}` }
     })
   },
-  getUser ({ userId }) {
+  getUser({ userId }) {
     return apiHelper.get(`/users/${userId}`, {
-      headers: { Authorization: `Bearer ${getToken()}`}
+      headers: { Authorization: `Bearer ${getToken()}` }
+    })
+  },
+  updateUser({ userId, formData }) {
+    return apiHelper.put(`/users/${userId}`, formData, {
+      headers: { Authorization: `Bearer ${getToken()}` }
     })
   },
   addFavorite({ restaurantId }) {
