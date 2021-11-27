@@ -2,12 +2,12 @@
   <div class="card mb-4">
     <div class="row no-gutters">
       <div class="col-sm-7 col-md-5 col-lg-4">
-        <img :src="userProfile.image" width="300px" height="300px" />
+        <img :src="userProfile.image | emptyAvatar" width="300px" height="300px" />
       </div>
       <div class="col-sm-5 col-md-7 col-lg-8">
         <div class="card-body">
           <h5 class="card-title">{{ userProfile.name }}</h5>
-          <p class="card-text">u{{ userProfile.email }}</p>
+          <p class="card-text">{{ userProfile.email }}</p>
           <ul class="list-unstyled list-inline">
             <li>
               <strong>{{ userProfile.Comments.length }}</strong> 已評論餐廳
@@ -53,6 +53,8 @@
 </template>
 
 <script>
+import {emptyAvatarFilter} from '../utils/mixins.js'
+
 export default {
   props: {
     userProfile: {
@@ -68,9 +70,10 @@ export default {
       required: true,
     },
   },
+  mixins: [emptyAvatarFilter],
   methods: {
-    handleFollowingClick(userProfileId) {
-      this.$emit("toggle-following-status", userProfileId);
+    handleFollowingClick(userId) {
+      this.$emit("toggle-following-status", userId);
     },
   },
 };

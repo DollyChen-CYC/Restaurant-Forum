@@ -15,3 +15,11 @@ export const emptyImageFilter = {
     }
   }
 }
+
+export const emptyAvatarFilter = {
+  filters: {
+    emptyAvatar(src) {
+      return src || 'https://i.imgur.com/58ImzMM.png'
+    }
+  }
+}

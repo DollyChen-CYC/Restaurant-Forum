@@ -12,7 +12,7 @@
         :to="{name: 'user', params: { id: user.id }}"
       >
         <img
-          :src="user.image"
+          :src="user.image | emptyAvatar"
           width="60"
           height="60"
           class="avatar rounded-1"
@@ -24,6 +24,8 @@
 </template>
 
 <script>
+import { emptyAvatarFilter } from '../utils/mixins.js'
+
 export default {
   props: {
     userProfile: {
@@ -31,5 +33,6 @@ export default {
       required: true,
     },
   },
+  mixins: [emptyAvatarFilter]
 };
 </script>
