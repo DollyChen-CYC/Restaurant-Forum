@@ -19,6 +19,7 @@
 </template>
 
 <script>
+import { Toast } from '../utils/helpers.js'
 
 export default {
   props: {
@@ -38,6 +39,14 @@ export default {
   },
   methods: {
     handleSubmit() {
+      // form validation
+      if (this.inputComment.trim().length === 0) {
+        Toast.fire({
+          icon:'warning',
+          title:'請輸入留言內容'
+        })
+        return
+      }
       this.$emit("after-create-comment", {
         restaurantId: this.restaurantId,
         text: this.inputComment,
