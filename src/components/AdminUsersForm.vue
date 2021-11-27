@@ -21,7 +21,7 @@
           <template v-if="user.id !== currentUser.id">
             <button
               v-if="user.isAdmin"
-              @click.prevent.stop="toggleUserAdmin(user.id)"
+              @click.prevent.stop="toggleUserAdmin(user.id, user.isAdmin)"
               type="button"
               class="btn btn-sm btn-success"
             >
@@ -29,7 +29,7 @@
             </button>
             <button
               v-else
-              @click.prevent.stop="toggleUserAdmin(user.id)"
+              @click.prevent.stop="toggleUserAdmin(user.id, user.isAdmin)"
               type="button"
               class="btn btn-sm btn-primary"
             >
@@ -68,10 +68,9 @@ export default {
     }
   },
   methods: {
-    async toggleUserAdmin(userId) {
+    async toggleUserAdmin(userId, isAdmin) {
       try {
-        const { data } = await adminAPI.users.setAdmin({ userId })
-        
+        const { data } = await adminAPI.users.setAdmin({ userId, isAdmin: (!isAdmin).toString() })
         if (data.status !== 'success') {
           throw new Error(data.message)
         }
