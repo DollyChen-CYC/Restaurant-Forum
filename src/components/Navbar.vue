@@ -34,6 +34,7 @@
             {{ currentUser.name || "使用者" }} 您好
           </router-link>
           <button
+          @click="logout"
             type="button"
             class="btn btn-sm btn-outline-light my-2 my-sm-0 ms-auto px-2"
           >
@@ -51,6 +52,12 @@ import { mapState } from 'vuex'
 export default {
   computed: {
     ...mapState(['currentUser', 'isAuthenticated'])
+  },
+  methods: {
+    logout () {
+      this.$store.commit('revokeAuthentication')
+      this.$router.push('/signin')
+    }
   }
 };
 </script>
