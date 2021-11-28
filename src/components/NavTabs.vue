@@ -54,7 +54,7 @@ export default {
 }
 
 .nav-tabs .nav-item,
-.nav-tabs .nav-link{
+.nav-tabs .nav-link {
   color: #4d4d4d;
 }
 
@@ -64,4 +64,7 @@ export default {
   color: #bd2333;
 }
 
+.nav-tabs .nav-link.active:hover {
+  color: white;
+}
 </style>
