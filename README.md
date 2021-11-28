@@ -1,5 +1,6 @@
 # 🍱 Restaurant Forum
 #### This is a front-end project of restaurant forum built by Vue.js.
+#### ☞ ☞ Take a look at this [Restaurant Forum](https://dollychen-cyc.github.io/Restaurant-Forum/#/signin). 👀
 
 .
 ## 🏃‍ Project setup and run
