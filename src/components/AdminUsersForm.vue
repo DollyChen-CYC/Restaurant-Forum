@@ -23,7 +23,7 @@
               v-if="user.isAdmin"
               @click.prevent.stop="toggleUserAdmin(user.id, user.isAdmin)"
               type="button"
-              class="btn btn-sm btn-success"
+              class="btn btn-sm btn-primary"
             >
               set as User
             </button>
@@ -31,7 +31,7 @@
               v-else
               @click.prevent.stop="toggleUserAdmin(user.id, user.isAdmin)"
               type="button"
-              class="btn btn-sm btn-primary"
+              class="btn btn-sm"
             >
               set as Admin
             </button>

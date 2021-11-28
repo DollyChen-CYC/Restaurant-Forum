@@ -1,13 +1,14 @@
 <template>
   <div class="card">
-    <div class="card-header">最新餐廳</div>
     <div class="card-body">
       <!-- v-for start -->
       <div v-for="restaurant in restaurants" :key="restaurant.id">
         <h4>
           <router-link
-            :to="{ name: 'restaurant', params: { id: restaurant.id }}"
-          >{{ restaurant.name }}</router-link>
+            :to="{ name: 'restaurant', params: { id: restaurant.id } }"
+            class="fs-4"
+            >{{ restaurant.name }}</router-link
+          >
           <small>{{
             restaurant.Category ? restaurant.Category.name : ""
           }}</small>
@@ -39,7 +40,7 @@ export default {
 <style scoped>
 small {
   margin: 0 8px;
-  font-size: 10px;
+  font-size: 14px;
 }
 
 .text-limit {

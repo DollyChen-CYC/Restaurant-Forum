@@ -13,7 +13,9 @@
       <button type="button" class="btn btn-link" @click="$router.back()">
         回上一頁
       </button>
-      <button type="submit" :disabled="isPosting" class="btn btn-primary mr-0">Submit</button>
+      <button type="submit" :disabled="isPosting" class="btn btn-primary mr-0">
+        Submit
+      </button>
     </div>
   </form>
 </template>
@@ -35,24 +37,29 @@ export default {
   data() {
     return {
       inputComment: "",
-    };
+    }
   },
   methods: {
     handleSubmit() {
       // form validation
       if (this.inputComment.trim().length === 0) {
         Toast.fire({
-          icon:'warning',
-          title:'請輸入留言內容'
+          icon: 'warning',
+          title: '請輸入留言內容'
         })
         return
       }
       this.$emit("after-create-comment", {
         restaurantId: this.restaurantId,
         text: this.inputComment,
-      });
-      this.inputComment = "";
+      })
+      this.inputComment = ""
     },
   },
 };
 </script>
+<style scoped>
+.form-group {
+  margin: 21px 0 8px;
+}
+</style>

@@ -34,12 +34,12 @@
         <td class="d-flex justify-content-between">
           <router-link
             :to="{name: 'admin-restaurant', params: {id: restaurant.id}}"
-            class="btn btn-link"
+            class="btn btn-link btn-primary"
           >Show</router-link>
 
           <router-link
             :to="{name: 'admin-restaurant-edit', params: {id: restaurant.id}}"
-            class="btn btn-link"
+            class="btn btn-link btn-primary"
           >Edit</router-link>
 
           <button

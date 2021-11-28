@@ -8,7 +8,7 @@
       />
       <div class="card-body">
         <p class="card-text title-wrap">
-          <span class="badge bg-primary float-end ms-1">{{
+          <span class="badge bg-dark float-end ms-1">{{
             restaurant.Category.name
           }}</span>
           <router-link
@@ -16,7 +16,6 @@
           >
             {{ restaurant.name }}
           </router-link>
-          
         </p>
 
         <p class="card-text text-truncate my-2">
@@ -54,7 +53,7 @@
           type="button"
           class="btn btn-primary like m-1"
         >
-          Like
+          Like 
         </button>
       </div>
     </div>
@@ -161,3 +160,34 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.badge.badge-secondary {
+  padding: 0;
+  margin: 8px 0;
+  color: #bd2333;
+  background-color: transparent;
+}
+
+.btn,
+.btn-border.btn:hover {
+  margin: 7px 14px 7px 0;
+}
+
+.card {
+  margin-bottom: 2rem !important;
+}
+.card-img-top {
+  background-color: #efefef;
+}
+
+.card-body {
+  padding: 17.5px;
+}
+
+.card-footer {
+  padding: 9px 17.5px;
+  border-color: rgb(232, 232, 232);
+  background: white;
+}
+</style>

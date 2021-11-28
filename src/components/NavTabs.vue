@@ -1,10 +1,7 @@
 <template>
   <ul class="nav nav-tabs mb-4">
     <li v-for="tab in tabs" v-bind:key="tab.id" class="nav-item">
-      <router-link
-        :to="tab.path"
-        class="nav-link"
-      >
+      <router-link :to="tab.path" class="nav-link">
         {{ tab.title }}
       </router-link>
     </li>
@@ -12,10 +9,10 @@
 </template>
 
 <script>
-import {v4 as uuidv4} from 'uuid'
+import { v4 as uuidv4 } from 'uuid'
 
 export default {
-  data () {
+  data() {
     return {
       tabs: [
         {
@@ -43,3 +40,28 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.nav-tabs {
+  border-bottom: 1px solid #bd2333;
+}
+
+.nav-tabs .nav-item.show .nav-link,
+.nav-tabs .nav-link.active {
+  border-color: #bd2333;
+  background-color: #bd2333;
+  color: white;
+}
+
+.nav-tabs .nav-item,
+.nav-tabs .nav-link{
+  color: #4d4d4d;
+}
+
+.nav-tabs .nav-link:focus,
+.nav-tabs .nav-link:hover {
+  border-color: #bd2333;
+  color: #bd2333;
+}
+
+</style>

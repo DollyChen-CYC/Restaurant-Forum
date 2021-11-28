@@ -59,7 +59,7 @@
               v-show="!category.isEditing"
               @click.stop.prevent="toggleIsEditing(category.id)"
               type="button"
-              class="btn btn-link mr-2"
+              class="btn btn-link btn-primary mr-2"
             >
               Edit
             </button>

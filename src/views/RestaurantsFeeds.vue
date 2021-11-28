@@ -4,14 +4,14 @@
 
     <h1 class="mt-5">最新動態</h1>
     <hr />
-    <div class="row">
+    <div class="row mt-4">
       <div class="col-md-6">
-        <h3>最新餐廳</h3>
+        <h3 class="mb-3">最新餐廳</h3>
         <!-- 最新餐廳 NewestRestaurants -->
         <NewestRestaurants :restaurants="restaurants" />
       </div>
       <div class="col-md-6">
-        <h3>最新評論</h3>
+        <h3 class="mb-3">最新評論</h3>
         <!-- 最新評論 NewestComments-->
         <NewestComments :comments="comments" />
       </div>
@@ -39,13 +39,12 @@ export default {
     }
   },
   created() {
-    this.fetchFeeds ()
+    this.fetchFeeds()
   },
   methods: {
-    async fetchFeeds () {
+    async fetchFeeds() {
       try {
         const response = await restaurants.getFeeds()
-        console.log('response', response)
         if (response.statusText !== 'OK') {
           throw new Error(response.statusText)
         }
@@ -63,3 +62,8 @@ export default {
   }
 }
 </script>
+<style scoped>
+h1 {
+  color: #bd2333;
+}
+</style>

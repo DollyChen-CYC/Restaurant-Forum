@@ -32,7 +32,7 @@
     <div class="col-lg-8">
       <p class="text-secondary">{{ restaurant.description }}</p>
       <router-link
-        class="btn me-2 btn-secondary btn-border mr-2"
+        class="btn me-2 btn-primary btn-border mr-2"
         :to="{ name: 'restaurant-dashboard', params: { id: restaurant.id } }"
         >Dashboard</router-link
       >
@@ -161,3 +161,12 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.col-lg-8 p,
+.contact-info-wrap li,
+.contact-info-wrap strong {
+  font-family: serif;
+  font-size: 17px;
+}
+</style>

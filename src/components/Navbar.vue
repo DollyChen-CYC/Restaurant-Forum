@@ -61,3 +61,29 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+  .navbar-toggler {
+    min-width: 70px;
+    margin-right: 0;
+  }
+
+  .navbar-brand {
+    font-size: 19px;
+    padding: 0;
+}
+
+.navbar .btn {
+  background: transparent;
+  color: white;
+  border: 2px solid white;
+}
+
+.navbar .btn:hover {
+  background: #bd2333;
+  color: white;
+  border: 2px solid #bd2333;
+}
+
+
+</style>

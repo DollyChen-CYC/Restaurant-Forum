@@ -2,11 +2,11 @@
   <div class="text-center col-12 col-sm-6 col-md-4 col-lg-3 g-4 px-4">
     <!-- temporary router -->
     <router-link :to="{ name: 'user', params: { id: user.id } }">
-      <img :src="user.image" class="rounded-3 w-100" />
+      <img :src="user.image | emptyAvatar" class="rounded-3" width="200" height="200" />
     </router-link>
     <h2 class="fs-4 my-2">{{ user.name }}</h2>
     <span class="badge bg-secondary w-auto px-2"
-      >追蹤人數：{{ user.FollowerCount }}</span
+      >追蹤人數：{{ user.followerCount }}</span
     >
     <p class="mt-3">
       <button
@@ -32,6 +32,7 @@
 <script>
 import usersAPI from '../apis/users.js'
 import { Toast } from '../utils/helpers.js'
+import { emptyAvatarFilter } from '../utils/mixins.js'
 
 export default {
   props: {
@@ -40,6 +41,7 @@ export default {
       required: true,
     },
   },
+  mixins: [emptyAvatarFilter],
   data() {
     return {
       user: this.initialUser,
