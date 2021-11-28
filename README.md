@@ -31,5 +31,16 @@ npm run build
 npm run lint
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+***
+
+## ␥ Connect to Alpha Camp Restaurant API 
+Yoy can get data of restaurant forum via API by following the steps below: 
+
+```
+git clone https://github.com/ALPHACamp/forum-express.git
+cd forum-express
+npm install
+npx sequelize db:migrate
+npx sequelize db:seed:all
+npm run dev
+```
