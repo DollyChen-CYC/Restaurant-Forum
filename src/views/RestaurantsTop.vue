@@ -2,84 +2,90 @@
   <div class="container py-5">
     <NavTabs />
     <h1 class="mt-5">人氣餐廳</h1>
-
     <hr />
-    <!-- v-for start -->
-    <div
-      v-for="restaurant in restaurantsTop"
-      :key="restaurant.id"
-      class="card my-4"
-      style="max-width: 540px; margin: auto"
-    >
-      <div class="row no-gutters">
-        <div class="col-md-5">
-          <router-link
-            :to="{ name: 'restaurant', params: { id: restaurant.id } }"
-          >
-            <img
-              class="card-img h-100"
-              :src="restaurant.image"
-              style="object-fit: cover"
-            />
-          </router-link>
-        </div>
-        <div class="col-md-7">
-          <div class="card-body">
-            <h5 class="card-title">
-              {{ restaurant.name }}
-            </h5>
-            <span class="badge bg-secondary"
-              >收藏數：{{ restaurant.FavoriteCount }}</span
-            >
-            <p class="card-text">
-              {{ restaurant.description }}
-            </p>
-            <router-link
-              :to="{
-                name: 'restaurant-dashboard',
-                params: { id: restaurant.id },
-              }"
-              class="btn btn-primary me-2"
-              >Show</router-link
-            >
 
-            <button
-              @click.stop.prevent="removeFavorite(restaurant.id)"
-              v-if="restaurant.isFavorited"
-              type="button"
-              class="btn btn-danger me-2"
+    <Spinner v-if="isLoading" />
+    <template v-else>
+      <!-- v-for start -->
+      <div
+        v-for="restaurant in restaurantsTop"
+        :key="restaurant.id"
+        class="card my-4"
+        style="max-width: 540px; margin: auto"
+      >
+        <div class="row no-gutters">
+          <div class="col-md-5">
+            <router-link
+              :to="{ name: 'restaurant', params: { id: restaurant.id } }"
             >
-              移除最愛
-            </button>
-            <button
-              @click.stop.prevent="addFavorite(restaurant.id)"
-              v-else
-              type="button"
-              class="btn btn-primary"
-            >
-              加到最愛
-            </button>
+              <img
+                class="card-img h-100"
+                :src="restaurant.image"
+                style="object-fit: cover"
+              />
+            </router-link>
+          </div>
+          <div class="col-md-7">
+            <div class="card-body">
+              <h5 class="card-title">
+                {{ restaurant.name }}
+              </h5>
+              <span class="badge bg-secondary"
+                >收藏數：{{ restaurant.FavoriteCount }}</span
+              >
+              <p class="card-text">
+                {{ restaurant.description }}
+              </p>
+              <router-link
+                :to="{
+                  name: 'restaurant-dashboard',
+                  params: { id: restaurant.id },
+                }"
+                class="btn btn-primary me-2"
+                >Show</router-link
+              >
+
+              <button
+                @click.stop.prevent="removeFavorite(restaurant.id)"
+                v-if="restaurant.isFavorited"
+                type="button"
+                class="btn btn-danger me-2"
+              >
+                移除最愛
+              </button>
+              <button
+                @click.stop.prevent="addFavorite(restaurant.id)"
+                v-else
+                type="button"
+                class="btn btn-primary"
+              >
+                加到最愛
+              </button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <!-- v-for end -->
+      <!-- v-for end -->
+    </template>
   </div>
 </template>
 
 <script>
 import NavTabs from '../components/NavTabs.vue'
+import Spinner from '../components/Spinner.vue'
 import restaurantsAPI from '../apis/restaurants.js'
 import usersAPI from '../apis/users.js'
 import { Toast } from '../utils/helpers.js'
 
 export default {
   components: {
-    NavTabs
+    NavTabs,
+    Spinner
   },
   data() {
     return {
-      restaurantsTop: []
+      restaurantsTop: [],
+      isLoading: true
     }
   },
   created() {
@@ -97,11 +103,13 @@ export default {
           const { id, name, tel, address, description, image, isFavorited, FavoriteCount } = restaurant
           return { id, name, tel, address, description, image, isFavorited, FavoriteCount }
         })
+        this.isLoading = false
       } catch (error) {
         Toast.fire({
           icon: 'error',
           title: '目前無法取得人氣餐廳清單，請稍後再試'
         })
+        this.isLoading = false
       }
     },
     async addFavorite(restaurantId) {
