@@ -5,42 +5,31 @@
 .
 ## 🏃‍ Project setup and run
 
-### Please clone the project
+### Step 1 .Please clone the project
   ```bash
   git clone https://github.com/DollyChen-CYC/Restaurant-Forum.git
   ```
   
-### Install dependencies
+### Step 2 . Project Setup
+- Install the npm packages
+  ```bash
+  cd Restaurant-Forum
+  ```
   ```bash
   npm install
   ```
+  
+- **Note:** 
+  Github page will connect to the Heroku demo site by default. If you want to run back-end server locally, you can build one by cloning [Alpha Camp Restaurant API](https://github.com/ALPHACamp/forum-express.git). 
+  
+  - **Hint:** The Alpha Camp back-end server runs on port 3000 by default. You need to change the API baseURL to connect:
+    - Open API helpers file `helpers.js` at `./Restaurant-Forum/src/utils`. 
+    - Change baseURL to `https://forum-express-api.herokuapp.com/api/`
 
-### Compiles and hot-reloads for development
+
+### Step 3. Project Run
 ```
 npm run serve
 ```
 - Open the browser and navigate to http://localhost:8080   👀 
 
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-***
-
-## ␥ Connect to Alpha Camp Restaurant API 
-Yoy can get data of restaurant forum via API by following the steps below: 
-
-```
-git clone https://github.com/ALPHACamp/forum-express.git
-cd forum-express
-npm install
-npx sequelize db:migrate
-npx sequelize db:seed:all
-npm run dev
-```
