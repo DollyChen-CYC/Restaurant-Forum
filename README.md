@@ -1,7 +1,9 @@
 # 🍱 Restaurant Forum
 #### This is a front-end project of restaurant forum built by Vue.js.
 #### ☞ ☞ Take a look at this [Restaurant Forum](https://dollychen-cyc.github.io/Restaurant-Forum/#/signin). 👀
-- Login with dummy account: `root@example.com` / password: `12345678`
+- Login with dummy account:
+  -  `root@example.com` / password: `12345678` 
+  -  `user1@example.com` / password: `12345678`
 
 
 ## 🏃‍ Project setup and run
