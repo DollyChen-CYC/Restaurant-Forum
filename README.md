@@ -4,7 +4,7 @@
 - Login with dummy account:
   -  `root@example.com` / password: `12345678` 
   -  `user1@example.com` / password: `12345678`
-
+<img height="400" src="https://github.com/DollyChen-CYC/portfolio/blob/main/src/assets/images/2-restaurant-forum.png" alt="Project Screenshot" />
 
 ## 🏃‍ Project setup and run
 
